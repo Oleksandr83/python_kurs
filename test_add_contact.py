@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest
+from contact import Contact
 
 class TestAddContact(unittest.TestCase):
     def setUp(self):
@@ -15,7 +16,7 @@ class TestAddContact(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_contact_page(wd)
-        self.create_contact(wd, Contact_firstname="Alex", Contact_lastname="Myniuk", Contact_adress="Sweden")
+        self.create_contact(wd, Contact(Contact_firstname="Alex", Contact_lastname="Myniuk", Contact_adress="Sweden"))
         self.return_to_home_page(wd)
         self.logout(wd)
 
@@ -24,7 +25,7 @@ class TestAddContact(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_contact_page(wd)
-        self.create_contact(wd, Contact_firstname="", Contact_lastname="", Contact_adress="")
+        self.create_contact(wd, Contact(Contact_firstname="", Contact_lastname="", Contact_adress=""))
         self.return_to_home_page(wd)
         self.logout(wd)
 
@@ -35,17 +36,17 @@ class TestAddContact(unittest.TestCase):
     def return_to_home_page(self, wd):
         wd.find_element_by_link_text("home page").click()
 
-    def create_contact(self, wd, Contact_firstname, Contact_lastname, Contact_adress):
+    def create_contact(self, wd, contact):
         # fill contact form
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(Contact_firstname)
+        wd.find_element_by_name("firstname").send_keys(contact.Contact_firstname)
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(Contact_lastname)
+        wd.find_element_by_name("lastname").send_keys(contact.Contact_lastname)
         wd.find_element_by_name("address").click()
         wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(Contact_adress)
+        wd.find_element_by_name("address").send_keys(contact.Contact_adress)
         # submit contact creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
