@@ -2,33 +2,44 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
-import unittest
+#import unittest
+import pytest
+from application import Application
 from contact import Contact
 
-class TestAddContact(unittest.TestCase):
+@pytest.fixture
+def app(request):
+    fixture = Application()
+    request.addfinalizer(fixture.destroy)
+    return fixture
+
+'''class TestAddContact(unittest.TestCase):
     def setUp(self):
-        self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(30)
+        self.app = Application()
+        #self.wd = webdriver.Firefox()
+        #self.wd.implicitly_wait(30)'''
 
     
-    def test_add_contact(self):
-        self.login(username="admin", password="secret")
-        self.create_contact(Contact(contact_firstname="Alex", contact_lastname="Myniuk", contact_adress="Sweden"))
-        self.return_to_home_page()
-        self.logout()
+def test_add_contact(app):
+    app.login(username="admin", password="secret")
+    app.create_contact(Contact(contact_firstname="Alex", contact_lastname="Myniuk", contact_adress="Sweden"))
+    app.return_to_home_page()
+    app.logout()
 
-    def test_add_empty_contact(self):
-        self.login(username="admin", password="secret")
-        self.create_contact(Contact(contact_firstname="", contact_lastname="", contact_adress=""))
-        self.return_to_home_page()
-        self.logout()
+def test_add_empty_contact(app):
+    app.login(username="admin", password="secret")
+    app.create_contact(Contact(contact_firstname="", contact_lastname="", contact_adress=""))
+    app.return_to_home_page()
+    app.logout()
 
 
-    def logout(self):
-        wd = self.wd
-        wd.find_element_by_link_text("Logout").click()
+    #def logout(self):
+    #    wd = self.wd
+    #    wd.find_element_by_link_text("Logout").click()
 
-    def return_to_home_page(self:
+    
+
+    '''def return_to_home_page(self:
         wd = self.wd
         wd.find_element_by_link_text("home page").click()
 
@@ -50,9 +61,9 @@ class TestAddContact(unittest.TestCase):
 
     def open_contact_page(self):
         wd = self.wd
-        wd.find_element_by_link_text("add new").click()
+        wd.find_element_by_link_text("add new").click()'''
 
-    def login(self,username, password):
+    '''def login(self,username, password):
         wd = self.wd
         self.open_home_page()
         wd.find_element_by_name("user").clear()
@@ -64,7 +75,7 @@ class TestAddContact(unittest.TestCase):
 
     def open_home_page(self):
         wd = self.wd
-        wd.get("http://localhost/addressbook/")
+        wd.get("http://localhost/addressbook/")'''
 
     #def is_element_present(self, how, what):
      #   try: self.wd.find_element(by=how, value=what)
@@ -76,8 +87,8 @@ class TestAddContact(unittest.TestCase):
      #   except NoAlertPresentException as e: return False
      #   return True
     
-    def tearDown(self):
-        self.wd.quit()
+    #def tearDown(self):
+    #    self.app.destroy()
 
-if __name__ == "__main__":
-    unittest.main()
+#if __name__ == "__main__":
+#    unittest.main()
