@@ -18,16 +18,16 @@ def app(request):
 
     
 def test_add_contact(app):
-    app.login(username="admin", password="secret")
+    app.session.login(username="admin", password="secret")
     app.create_contact(Contact(contact_firstname="Alex", contact_lastname="Myniuk", contact_adress="Sweden"))
     app.return_to_home_page()
-    app.logout()
+    app.session.logout()
 
 def test_add_empty_contact(app):
-    app.login(username="admin", password="secret")
+    app.session.login(username="admin", password="secret")
     app.create_contact(Contact(contact_firstname="", contact_lastname="", contact_adress=""))
     app.return_to_home_page()
-    app.logout()
+    app.session.logout()
 
 
     #def logout(self):
