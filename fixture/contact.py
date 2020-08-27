@@ -26,7 +26,7 @@ class ContactHelper:
 
     def edit_first_contact(self):
         wd = self.app.wd
-        self.open_contact_page()
+        #self.open_contact_page()
         # select edition for the first contact
         wd.find_element_by_xpath("/html/body/div/div[4]/form[2]/table/tbody/tr[2]/td[8]/a/img").click()
         # edit contact info
