@@ -10,28 +10,30 @@ class ContactHelper:
     def create(self, contact):
         wd = self.app.wd
         self.open_contact_page()
-        # fill contact form
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(contact.contact_firstname)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(contact.contact_lastname)
-        wd.find_element_by_name("address").click()
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(contact.contact_adress)
+        self.fill_contact_form(contact)
         # submit contact creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.return_to_home_page()
 
-    def edit_first_contact(self):
+    def fill_contact_form(self, contact):
+        wd = self.app.wd
+        self.change_contact_field_value("firstname", contact.contact_firstname)
+        self.change_contact_field_value("lastname", contact.contact_lastname)
+        #self.change_contact_field_value("address", contact.contact_address)
+
+    def change_contact_field_value(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
+
+    def edit_first_contact(self, new_contact_data):
         wd = self.app.wd
         # select edition for the first contact
         wd.find_element_by_xpath("/html/body/div/div[4]/form[2]/table/tbody/tr[2]/td[8]/a/img").click()
         # edit contact info
-        wd.find_element_by_name("address").click()
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys("Edited")
+        self.fill_contact_form(new_contact_data)
         # submit contact updating
         wd.find_element_by_name("update").click()
         self.return_to_home_page()
