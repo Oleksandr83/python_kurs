@@ -19,7 +19,7 @@ class ContactHelper:
         wd = self.app.wd
         self.change_contact_field_value("firstname", contact.contact_firstname)
         self.change_contact_field_value("lastname", contact.contact_lastname)
-        #self.change_contact_field_value("address", contact.contact_address)
+        self.change_contact_field_value("address", contact.contact_address)
 
     def change_contact_field_value(self, field_name, text):
         wd = self.app.wd
@@ -30,6 +30,7 @@ class ContactHelper:
 
     def edit_first_contact(self, new_contact_data):
         wd = self.app.wd
+        wd.find_element_by_xpath("/html/body/div/div[3]/ul/li[1]/a").click()
         # select edition for the first contact
         wd.find_element_by_xpath("/html/body/div/div[4]/form[2]/table/tbody/tr[2]/td[8]/a/img").click()
         # edit contact info
@@ -40,6 +41,7 @@ class ContactHelper:
 
     def del_first_contact(self):
         wd = self.app.wd
+        wd.find_element_by_xpath("/html/body/div/div[3]/ul/li[1]/a").click()
         # select first contact
         wd.find_element_by_name("selected[]").click()
         # submit deletion
