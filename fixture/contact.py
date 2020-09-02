@@ -1,3 +1,5 @@
+from model.contact import Contact
+
 class ContactHelper:
 
     def __init__(self, app):
@@ -53,3 +55,13 @@ class ContactHelper:
     def return_to_home_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home page").click()
+
+    def count(self):
+        wd = self.app.wd
+        #self.return_to_home_page()
+        return len(wd.find_elements_by_name("selected[]"))
+
+    def check_contact_existence(self):
+        wd = self.app.wd
+        if self.count() == 0:
+            self.create(Contact(contact_firstname="TestName"))
