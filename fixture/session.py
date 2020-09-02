@@ -27,7 +27,7 @@ class SessionHelper:
 
     def is_logged_in(self):
         wd = self.app.wd
-        return len(wd.find_elements_by_link_text("Logout")) > 0
+        return len(wd.find_elements_by_link_text("Logout")) > 0 # ошибка была тут, т.к. было указано не elements a element (в единственном числе)
 
     def is_logged_in_as(self, username):
          wd = self.app.wd
