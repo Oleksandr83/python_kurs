@@ -5,13 +5,13 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
-    def open_contact_page(self):
+    def open_add_contact_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
 
     def create(self, contact):
         wd = self.app.wd
-        self.open_contact_page()
+        self.open_add_contact_page()
         self.fill_contact_form(contact)
         # submit contact creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
@@ -54,7 +54,9 @@ class ContactHelper:
 
     def return_to_home_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home page").click()
+        if not (wd.current_url.endswith("/addressbook/") or wd.current_url.endswith("/index.php")):
+            wd.find_element_by_link_text("home page").click()
+        #wd.find_element_by_link_text("home page").click()
 
     def count(self):
         wd = self.app.wd
