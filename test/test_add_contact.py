@@ -13,7 +13,10 @@ def app(request):
 
 def test_add_contact(app):
     #app.session.login(username="admin", password="secret")
+    old_contacts_list = app.contact.get_contact_list()
     app.contact.create(Contact(contact_firstname="Alex", contact_lastname="Myniuk", contact_address="Sweden"))
+    new_contacts_list = app.contact.get_contact_list()
+    assert len(old_contacts_list) + 1 == len(new_contacts_list)
     #app.contact.return_to_home_page()
     #app.session.logout()
 
