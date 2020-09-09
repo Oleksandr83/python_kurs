@@ -50,13 +50,14 @@ class ContactHelper:
         wd.find_element_by_xpath("/html/body/div/div[4]/form[2]/div[2]/input").click()
         # close popup
         wd.switch_to_alert().accept()
-        wd.find_element_by_css_selector("div.msgbox")
-        #self.return_to_home_page()
+        #wd.find_element_by_css_selector("div.msgbox")
+        wd.find_element_by_xpath("/html/body/div/div[3]/ul/li[1]/a").click()
 
     def return_to_home_page(self):
         wd = self.app.wd
         if not (wd.current_url.endswith("/addressbook/") or wd.current_url.endswith("/index.php")):
-            wd.find_element_by_link_text("home page").click()
+            #wd.find_element_by_link_text("home page").click()
+            wd.find_element_by_xpath("/html/body/div/div[3]/ul/li[1]/a").click()
         #wd.find_element_by_link_text("home page").click()
 
     def count(self):
@@ -77,20 +78,7 @@ class ContactHelper:
             cells = element.find_elements_by_tag_name("td")
             text2 = cells[1].text
             text1 = cells[2].text
-            text3 = cells[3].text
+            #text3 = cells[3].text
             id = element.find_element_by_name("selected[]").get_attribute("value")
-            contacts.append(Contact(contact_firstname=text1, contact_lastname=text2, contact_address=text3,  id=id))
+            contacts.append(Contact(contact_firstname=text1, contact_lastname=text2, id=id))
         return contacts
-
-
-
-
-    '''def get_group_list(self):
-        wd = self.app.wd
-        self.open_group_page()
-        groups = []
-        for element in wd.find_elements_by_css_selector("span.group"):
-            text =element.text
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            groups.append(Group(name=text, id=id))
-        return groups'''
