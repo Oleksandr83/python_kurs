@@ -78,7 +78,7 @@ class ContactHelper:
             cells = element.find_elements_by_tag_name("td")
             text2 = cells[1].text
             text1 = cells[2].text
-            #text3 = cells[3].text
+            text3 = cells[3].text
             id = element.find_element_by_name("selected[]").get_attribute("value")
-            contacts.append(Contact(contact_firstname=text1, contact_lastname=text2, id=id))
+            contacts.append(Contact(contact_firstname=text1, contact_lastname=text2, contact_address=text3, id=id))
         return contacts

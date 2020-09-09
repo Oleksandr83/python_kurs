@@ -15,7 +15,7 @@ class Contact:
 
     # стандартная функция equels - принимающая в качестве второго параметра обьект с которым мы должны сравнить текущий обьект self
     def __eq__(self, other):
-        return (self.id is None or other.id is None or self.id == other.id) and self.contact_firstname == other.contact_firstname and self.contact_lastname == other.contact_lastname #and self.contact_address == other.contact_address
+        return (self.id is None or other.id is None or self.id == other.id) and self.contact_firstname == other.contact_firstname and self.contact_lastname == other.contact_lastname and self.contact_address == other.contact_address
 
     def id_or_max(self):
         if self.id:
