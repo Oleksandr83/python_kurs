@@ -67,3 +67,28 @@ class ContactHelper:
         wd = self.app.wd
         if self.count() == 0:
             self.create(Contact(contact_firstname="TestName"))
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        self.return_to_home_page()
+        contacts = []
+        for element in wd.find_elements_by_xpath("//tr[contains(@name, 'entry')]"):
+            cells = element.find_elements_by_tag_name("td")
+            text1 = cells[1].text
+            text2 = cells[2].text
+            text3 = cells[3].text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            contacts.append(Contact(contact_firstname=text1, contact_lastname=text2, contact_address=text3,  id=id))
+        return contacts
+
+
+
+    '''def get_group_list(self):
+        wd = self.app.wd
+        self.open_group_page()
+        groups = []
+        for element in wd.find_elements_by_css_selector("span.group"):
+            text =element.text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            groups.append(Group(name=text, id=id))
+        return groups'''
