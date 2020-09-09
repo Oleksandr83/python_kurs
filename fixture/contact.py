@@ -50,6 +50,7 @@ class ContactHelper:
         wd.find_element_by_xpath("/html/body/div/div[4]/form[2]/div[2]/input").click()
         # close popup
         wd.switch_to_alert().accept()
+        wd.find_element_by_css_selector("div.msgbox")
         #self.return_to_home_page()
 
     def return_to_home_page(self):
@@ -74,12 +75,13 @@ class ContactHelper:
         contacts = []
         for element in wd.find_elements_by_xpath("//tr[contains(@name, 'entry')]"):
             cells = element.find_elements_by_tag_name("td")
-            text1 = cells[1].text
-            text2 = cells[2].text
+            text2 = cells[1].text
+            text1 = cells[2].text
             text3 = cells[3].text
             id = element.find_element_by_name("selected[]").get_attribute("value")
             contacts.append(Contact(contact_firstname=text1, contact_lastname=text2, contact_address=text3,  id=id))
         return contacts
+
 
 
 
