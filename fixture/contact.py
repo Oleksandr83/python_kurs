@@ -44,10 +44,13 @@ class ContactHelper:
         self.contact_cache = None
 
     def del_first_contact(self):
+        self.del_contact_by_index(0)
+
+    def del_contact_by_index(self, index):
         wd = self.app.wd
         wd.find_element_by_xpath("/html/body/div/div[3]/ul/li[1]/a").click()
         # select first contact
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click() #wd.find_elements_by_name("selected[]").click()
         # submit deletion
         wd.find_element_by_xpath("/html/body/div/div[4]/form[2]/div[2]/input").click()
         # close popup
