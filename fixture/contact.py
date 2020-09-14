@@ -86,11 +86,48 @@ class ContactHelper:
             wd = self.app.wd
             self.return_to_home_page()
             self.contact_cache = []
-            for element in wd.find_elements_by_xpath("//tr[contains(@name, 'entry')]"):
-                cells = element.find_elements_by_tag_name("td")
-                text2 = cells[1].text
-                text1 = cells[2].text
-                text3 = cells[3].text
-                id = element.find_element_by_name("selected[]").get_attribute("value")
-                self.contact_cache.append(Contact(contact_firstname=text1, contact_lastname=text2, contact_address=text3, id=id))
+            for row in wd.find_elements_by_xpath("//tr[contains(@name, 'entry')]"):
+                cells = row.find_elements_by_tag_name("td")
+                id = cells[0].find_element_by_tag_name("input").get_attribute("value") #id = row.find_element_by_name("selected[]").get_attribute("value")
+                lastname = cells[1].text
+                firstname = cells[2].text
+                #email = cells[4].text
+                #address = cells[3].text
+                all_phones = cells[5].text.splitlines()
+                print(all_phones)
+                self.contact_cache.append(Contact(contact_firstname=firstname, contact_lastname=lastname, id=id,
+                                                  contact_homephone=all_phones[0], contact_mobilephone=all_phones[1],
+                                                  contact_workphone=all_phones[2], contact_secondaryphone=all_phones[3]))
         return list(self.contact_cache)
+
+    # открывает форму редактирование index контакта
+    def open_contact_to_edit_by_index(self, index):
+        wd = self.app.wd
+        self.app.open_home_page()
+        row = wd.find_elements_by_name("entry")[index]
+        cell = row.find_elements_by_tag_name("td")[7]
+        cell.find_element_by_tag_name("a").click()
+
+    # открывает странице просмотра деталей определенного index контакта
+    def open_contact_view_by_index(self, index):
+        wd = self.app.wd
+        self.app.open_home_page()
+        row = wd.find_elements_by_name("entry")[index]
+        cell = row.find_elements_by_tag_name("td")[6]
+        cell.find_element_by_tag_name("a").click()
+
+
+    def get_contact_info_from_edit_page(self, index):
+        wd = self.app.wd
+        self.open_contact_to_edit_by_index(index)
+        firstname = wd.find_element_by_name("firstname").get_attribute("value")
+        lastname = wd.find_element_by_name("lastname").get_attribute("value")
+        adress = wd.find_element_by_name("address").get_attribute("value")
+        id = wd.find_element_by_name("id").get_attribute("value")
+        homephone = wd.find_element_by_name("home").get_attribute("value")
+        workphone = wd.find_element_by_name("work").get_attribute("value")
+        mobilephone = wd.find_element_by_name("mobile").get_attribute("value")
+        secondaryphone = wd.find_element_by_name("phone2").get_attribute("value")
+        return Contact(contact_firstname=firstname, contact_lastname=lastname, contact_address=adress, id=id,
+                       contact_homephone=homephone, contact_mobilephone=mobilephone,
+                       contact_workphone=workphone, contact_secondaryphone=secondaryphone)  # постройка обьекта из данных
