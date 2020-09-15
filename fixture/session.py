@@ -34,7 +34,8 @@ class SessionHelper:
          return self.get_logget_user() == username
 
     def get_logget_user(self):
-         return wd.find_element_by_xpath("/html/body/div/div[1]/form/b").text[1:-1]
+        wd = self.app.wd
+        return wd.find_element_by_xpath("/html/body/div/div[1]/form/b").text[1:-1]
 
     def ensure_login(self, username, password):
         wd = self.app.wd

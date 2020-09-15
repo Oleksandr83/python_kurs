@@ -3,15 +3,22 @@ from sys import maxsize
 
 class Contact:
 
-    def __init__(self, contact_firstname=None, contact_lastname=None, contact_homephone=None, contact_mobilephone=None, contact_workphone=None, contact_secondaryphone=None, contact_address=None, id=None):
+    def __init__(self, contact_firstname=None, contact_lastname=None, all_phones_from_home_page=None, id=None,
+                 contact_homephone=None, contact_mobilephone=None, contact_workphone=None, contact_secondaryphone=None,
+                 contact_address=None, contact_all_emails=None, contact_email=None, contact_email2=None, contact_email3=None ):
         self.contact_firstname = contact_firstname
         self.contact_lastname = contact_lastname
+        self.all_phones_from_home_page=all_phones_from_home_page
         self.contact_homephone = contact_homephone
         self.contact_mobilephone = contact_mobilephone
         self.contact_workphone = contact_workphone
         self.contact_secondaryphone = contact_secondaryphone
         self.contact_address = contact_address
         self.id = id
+        self.contact_all_emails = contact_all_emails
+        self.contact_email = contact_email
+        self.contact_email2 = contact_email2
+        self.contact_email3 = contact_email3
 
     # representation в консоли - стандартная функция - определяет как будет выглядеть обтект при выводе на консоль (строкое представление)
     def __repr__(self):

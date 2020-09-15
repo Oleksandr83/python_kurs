@@ -1,4 +1,5 @@
 from model.contact import Contact
+import re # пакет для работы с реглярными выражениями
 
 class ContactHelper:
 
@@ -93,11 +94,12 @@ class ContactHelper:
                 firstname = cells[2].text
                 #email = cells[4].text
                 #address = cells[3].text
-                all_phones = cells[5].text.splitlines()
-                print(all_phones)
-                self.contact_cache.append(Contact(contact_firstname=firstname, contact_lastname=lastname, id=id,
-                                                  contact_homephone=all_phones[0], contact_mobilephone=all_phones[1],
-                                                  contact_workphone=all_phones[2], contact_secondaryphone=all_phones[3]))
+                # all_phones = cells[5].text.splitlines()
+                all_phones = cells[5].text
+                #print(all_phones)
+                all_emails = cells[4].text
+                print(all_emails)
+                self.contact_cache.append(Contact(contact_firstname=firstname, contact_lastname=lastname, id=id, all_phones_from_home_page = all_phones, contact_all_emails=all_emails))
         return list(self.contact_cache)
 
     # открывает форму редактирование index контакта
@@ -128,6 +130,22 @@ class ContactHelper:
         workphone = wd.find_element_by_name("work").get_attribute("value")
         mobilephone = wd.find_element_by_name("mobile").get_attribute("value")
         secondaryphone = wd.find_element_by_name("phone2").get_attribute("value")
+        email = wd.find_element_by_name("email").get_attribute("value")
+        email2 = wd.find_element_by_name("email2").get_attribute("value")
+        email3 = wd.find_element_by_name("email3").get_attribute("value")
         return Contact(contact_firstname=firstname, contact_lastname=lastname, contact_address=adress, id=id,
                        contact_homephone=homephone, contact_mobilephone=mobilephone,
+                       contact_workphone=workphone, contact_secondaryphone=secondaryphone,
+                       contact_email=email, contact_email2=email2, contact_email3=email3)  # постройка обьекта из данных
+
+
+    def get_contact_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_contact_view_by_index(index)
+        text = wd.find_element_by_id("content").text
+        homephone = re.search("H: (.*)", text).group(1)
+        workphone = re.search("W: (.*)", text).group(1)
+        mobilephone = re.search("M: (.*)", text).group(1)
+        secondaryphone = re.search("P: (.*)", text).group(1)
+        return Contact(contact_homephone=homephone, contact_mobilephone=mobilephone,
                        contact_workphone=workphone, contact_secondaryphone=secondaryphone)  # постройка обьекта из данных
