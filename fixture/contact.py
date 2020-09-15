@@ -99,7 +99,7 @@ class ContactHelper:
                 #print(all_phones)
                 all_emails = cells[4].text
                 print(all_emails)
-                self.contact_cache.append(Contact(contact_firstname=firstname, contact_lastname=lastname, id=id, all_phones_from_home_page = all_phones, contact_all_emails=all_emails))
+                self.contact_cache.append(Contact(contact_firstname=firstname, contact_lastname=lastname, id=id, all_phones_from_home_page = all_phones, contact_all_emails_from_home_page=all_emails))
         return list(self.contact_cache)
 
     # открывает форму редактирование index контакта
