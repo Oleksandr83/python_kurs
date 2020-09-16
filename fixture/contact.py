@@ -24,6 +24,8 @@ class ContactHelper:
         self.change_contact_field_value("firstname", contact.contact_firstname)
         self.change_contact_field_value("lastname", contact.contact_lastname)
         self.change_contact_field_value("address", contact.contact_address)
+        self.change_contact_field_value("home", contact.contact_homephone)
+        self.change_contact_field_value("email", contact.contact_email)
 
     def change_contact_field_value(self, field_name, text):
         wd = self.app.wd
@@ -92,14 +94,14 @@ class ContactHelper:
                 id = cells[0].find_element_by_tag_name("input").get_attribute("value") #id = row.find_element_by_name("selected[]").get_attribute("value")
                 lastname = cells[1].text
                 firstname = cells[2].text
-                #email = cells[4].text
-                #address = cells[3].text
+                address = cells[3].text
                 # all_phones = cells[5].text.splitlines()
                 all_phones = cells[5].text
                 #print(all_phones)
                 all_emails = cells[4].text
                 #print(all_emails)
-                self.contact_cache.append(Contact(contact_firstname=firstname, contact_lastname=lastname, id=id, all_phones_from_home_page = all_phones, contact_all_emails_from_home_page=all_emails))
+                self.contact_cache.append(Contact(contact_firstname=firstname, contact_lastname=lastname, contact_address=address,
+                                                  id=id, all_phones_from_home_page = all_phones, contact_all_emails_from_home_page=all_emails))
         return list(self.contact_cache)
 
     # открывает форму редактирование index контакта

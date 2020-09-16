@@ -2,6 +2,9 @@
 
 # import pytest
 from model.group import Group
+import pytest
+import random
+import string
 #from fixture.application import Application
 from sys import maxsize
 
@@ -11,10 +14,21 @@ def app(request):
     request.addfinalizer(fixture.destroy)
     return fixture'''
 
-def test_add_group(app):
-    #app.session.login( username="admin", password="secret")
+def random_string(prefix, maxlen):
+    symbols = string.ascii_letters + string.digits + string.punctuation + " "*10
+    return prefix + "".join([random.choice(symbols) for i in range (random.randrange(maxlen))])
+
+
+testdata = [
+        Group(name=name, header=header, footer=footer)
+        for name in ["", random_string("name", 10)]
+        for header in ["", random_string("header", 10)]
+        for footer in ["", random_string("footer", 10)]
+]
+@pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
+def test_add_group(app, group):
     old_groups = app.group.get_group_list()
-    group = Group(name="new group", header="some info", footer="other")
+    #group = Group(name="new group", header="some info", footer="other")
     app.group.create(group)
     new_groups = app.group.get_group_list()
     assert len(old_groups) + 1 == app.group.count() #len(new_groups)
