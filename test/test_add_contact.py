@@ -28,7 +28,7 @@ def random_email(prefix, maxlen):
 
 testdata =[Contact(contact_firstname="", contact_lastname="", contact_address="",contact_homephone="", contact_email="")] + [
         Contact(contact_firstname=random_string("firstname", 15), contact_lastname=random_string("lastname", 20), contact_address=random_string("address", 10), contact_homephone=random_numbers("tel", 12), contact_email=random_email("email", 30))
-        for i in range(3)
+        for i in range(2)
 ]
 
 #testdata = [
