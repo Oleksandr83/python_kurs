@@ -22,11 +22,16 @@ class Contact:
 
     # representation в консоли - стандартная функция - определяет как будет выглядеть обтект при выводе на консоль (строкое представление)
     def __repr__(self):
-        return "%s:%s:%s:%s" % (self.id, self.contact_firstname, self.contact_lastname, self.contact_address)
+        return "%s:%s:%s:%s:%s:%s" % (self.id, self.contact_firstname, self.contact_lastname, self.contact_address, self.all_phones_from_home_page, self.contact_all_emails_from_home_page)
 
     # стандартная функция equels - принимающая в качестве второго параметра обьект с которым мы должны сравнить текущий обьект self
     def __eq__(self, other):
-        return (self.id is None or other.id is None or self.id == other.id) and self.contact_firstname == other.contact_firstname and self.contact_lastname == other.contact_lastname and self.contact_address == other.contact_address
+        return (self.id is None or other.id is None or self.id == other.id) and \
+               self.contact_firstname == other.contact_firstname and \
+               self.contact_lastname == other.contact_lastname and \
+               self.contact_address == other.contact_address and \
+               self.all_phones_from_home_page == other.all_phones_from_home_page and \
+               self.contact_all_emails_from_home_page == other.contact_all_emails_from_home_page
 
     def id_or_max(self):
         if self.id:

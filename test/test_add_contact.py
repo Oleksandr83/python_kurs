@@ -26,16 +26,21 @@ def random_email(prefix, maxlen):
     symbols = string.ascii_letters + string.digits + "@"*10 + "."
     return prefix + "".join([random.choice(symbols) for i in range (random.randrange(maxlen))])
 
-testdata = [
-        Contact(contact_firstname=name, contact_lastname=lastname, contact_address=address, contact_homephone=homephone, contact_email=contact_email)
-        for name in ["", random_string("name", 10)] # один раз берется пустоя значение, а другой из 10 символов
-        for lastname in ["", random_string("lastname", 10)]
-        for address in ["", random_string("address:", 15)]
-        for homephone in [random_numbers("tel ", 10)]
-        for contact_email in [random_email("email: ", 25)]
+testdata =[Contact(contact_firstname="", contact_lastname="", contact_address="",contact_homephone="", contact_email="")] + [
+        Contact(contact_firstname=random_string("firstname", 15), contact_lastname=random_string("lastname", 20), contact_address=random_string("address", 10), contact_homephone=random_numbers("tel", 12), contact_email=random_email("email", 30))
+        for i in range(3)
 ]
 
-@pytest.mark.parametrize("contact", testdata, ids=[repr(x) for x in testdata])
+#testdata = [
+#        Contact(contact_firstname=name, contact_lastname=lastname, contact_address=address, contact_homephone=homephone, contact_email=contact_email)
+#        for name in ["", random_string("name", 10)] # один раз берется пустоя значение, а другой из 10 символов
+#        for lastname in ["", random_string("lastname", 10)]
+#        for address in ["", random_string("address:", 15)]
+#        for homephone in [random_numbers("tel ", 10)]
+#        for contact_email in [random_email("email: ", 25)]
+#]
+
+@pytest.mark.parametrize("contact", testdata, ids=[repr(x) for x in testdata]) #где "contact" название параметра который будет передаваться, а testdata источник откуда будут браться значение параметра
 def test_add_contact(app, contact):
     pass
     old_contacts_list = app.contact.get_contact_list()
