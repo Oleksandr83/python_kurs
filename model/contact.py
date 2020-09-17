@@ -25,7 +25,7 @@ class Contact:
         return "%s:%s:%s:%s" % (self.id, self.contact_firstname, self.contact_lastname, self.contact_address)
                                       #self.all_phones_from_home_page,
                                       #self.contact_all_emails_from_home_page
-                                      )
+
 
     # стандартная функция equels - принимающая в качестве второго параметра обьект с которым мы должны сравнить текущий обьект self
     def __eq__(self, other):
