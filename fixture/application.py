@@ -19,6 +19,7 @@ class Application:
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
         self.base_url = base_url
+        #self.password = password
 
     def is_valid(self):
         try:
