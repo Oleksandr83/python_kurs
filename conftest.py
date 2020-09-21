@@ -1,6 +1,8 @@
 import pytest
-from fixture.application import Application
 import json
+import os.path
+from fixture.application import Application
+
 
 fixture = None
 target = None
@@ -12,8 +14,9 @@ def app(request):
     global target
     browser = request.config.getoption("--browser")
     if target is None:
-        with open(request.config.getoption("--target")) as config_file:
-            target = json.load(config_file)
+        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--target"))  # __file__ специальная встроенная переменная Python, которая содержит информацию, о пути к текущему файлу, правда может быть не совсем правильный. Иногда как обсолютный путь, а иногда как относительный путь
+        with open(config_file) as f:
+            target = json.load(f)
     if fixture is None or not fixture.is_valid():
         fixture = Application(browser=browser, base_url=target['baseUrl'])
     fixture.session.ensure_login(username=target['username'], password=target['password'])
@@ -30,4 +33,4 @@ def stop(request):
 def pytest_addoption (parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--target", action="store", default="target.json")
-    parser.addoption("--password", action="store", default="secret")
+    #parser.addoption("--password", action="store", default="secret")
