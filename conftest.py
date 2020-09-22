@@ -15,7 +15,7 @@ def app(request):
     browser = request.config.getoption("--browser")
     if target is None:
         config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--target"))  # __file__ специальная встроенная переменная Python, которая содержит информацию, о пути к текущему файлу, правда может быть не совсем правильный. Иногда как обсолютный путь, а иногда как относительный путь
-        with open(config_file) as f:
+        with open(config_file) as f: # переменная f будет содержать обьект, который указывает на открытый файл
             target = json.load(f)
     if fixture is None or not fixture.is_valid():
         fixture = Application(browser=browser, base_url=target['baseUrl'])
