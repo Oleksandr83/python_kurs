@@ -3,8 +3,8 @@ import random
 import string
 import os.path
 import json
-import getopt
-import sys
+import getopt # для чтения опций командной строки
+import sys # для того что бы получить доступ к опциям командной строки
 
 
 try:

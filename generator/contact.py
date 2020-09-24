@@ -1,6 +1,26 @@
 from model.contact import Contact
 import random
 import string
+import os.path
+import json
+import getopt
+import sys
+
+
+try:
+    opts, args = getopt.getopt(sys.argv[1:], "n:f:", ["number of contacts", "file"])
+except getopt.GetoptError as err:
+    getopt.usage()
+    sys.exit(2)
+
+n = 5
+f = "data/contacts.json"
+
+for o, a in opts:
+    if o == "-n":
+        n = int(a)
+    elif o == "-f":
+        f = a
 
 # случайным образом генерируемые данные
 def random_string(prefix, maxlen):
@@ -17,5 +37,10 @@ def random_email(prefix, maxlen):
 
 testdata =[Contact(contact_firstname="", contact_lastname="", contact_address="",contact_homephone="", contact_email="")] + [
         Contact(contact_firstname=random_string("firstname", 15), contact_lastname=random_string("lastname", 20), contact_address=random_string("address", 10), contact_homephone=random_numbers("tel", 12), contact_email=random_email("email", 30))
-        for i in range(2)
+        for i in range(n)
 ]
+
+file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../", f)
+
+with open(file, "w") as out:
+    out.write(json.dumps(testdata, default=lambda x: x.__dict__, indent=2))
