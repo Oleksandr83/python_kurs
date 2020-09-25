@@ -39,7 +39,7 @@ def pytest_addoption (parser):
 def pytest_generate_tests(metafunc): # особый обьект metafunc, через него можно получить практически полную информацию о тестовой функциию. а частности можем полуить инфо о фиксиурах как параметры тестовой функции
     for fixture in metafunc.fixturenames:
         if fixture.startswith("data_"): # проюегая по всем параметрам, нас будет интересовать только те которые начинаются с префикса data
-            testdata = load_form_module(fixture[5:1]) # когда находим, загружаем тестовые данные из модуля котор имеет такое же название как фиестура но обрезанный fixture[5:1] удаляет первые пять символов
+            testdata = load_form_module(fixture[5:]) # когда находим, загружаем тестовые данные из модуля котор имеет такое же название как фиестура но обрезанный fixture[5:1] удаляет первые пять символов
             metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
 
 def load_form_module(module):

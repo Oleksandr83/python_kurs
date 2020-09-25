@@ -4,7 +4,7 @@ import pytest
 from fixture.application import Application
 from model.contact import Contact
 import pytest
-from data.add_contact import testdata # генерируемые данные
+#from data.add_contact import testdata # генерируемые данные
 #from data.contacts import constant as testdata # использование фиксированных данных
 import random
 import string
@@ -42,9 +42,9 @@ import string
 #        for contact_email in [random_email("email: ", 25)]
 #]
 
-@pytest.mark.parametrize("contact", testdata, ids=[repr(x) for x in testdata]) #где "contact" название параметра который будет передаваться, а testdata источник откуда будут браться значение параметра
-def test_add_contact(app, contact):
-    pass
+#@pytest.mark.parametrize("contact", testdata, ids=[repr(x) for x in testdata]) #где "contact" название параметра который будет передаваться, а testdata источник откуда будут браться значение параметра
+def test_add_contact(app, data_contacts):
+    contact = data_contacts
     old_contacts_list = app.contact.get_contact_list()
     #contact = Contact(contact_firstname="Alex", contact_lastname="Myniuk", contact_address="Sweden")
     app.contact.create(contact)
