@@ -1,6 +1,7 @@
 from model.contact import Contact
 import re # пакет для работы с реглярными выражениями
 
+
 class ContactHelper:
 
     def __init__(self, app):

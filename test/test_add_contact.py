@@ -4,8 +4,8 @@ import pytest
 from fixture.application import Application
 from model.contact import Contact
 import pytest
-#from data.add_contact import testdata # генерируемые данные
-from data.add_contact import constant as testdata # использование фиксированных данных
+from data.add_contact import testdata # генерируемые данные
+#from data.contacts import constant as testdata # использование фиксированных данных
 import random
 import string
 

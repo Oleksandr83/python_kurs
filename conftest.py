@@ -2,6 +2,7 @@ import pytest
 import json
 import os.path
 from fixture.application import Application
+import importlib
 
 
 fixture = None
@@ -34,3 +35,12 @@ def pytest_addoption (parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--target", action="store", default="target.json")
     #parser.addoption("--password", action="store", default="secret")
+
+def pytest_generate_tests(metafunc): # особый обьект metafunc, через него можно получить практически полную информацию о тестовой функциию. а частности можем полуить инфо о фиксиурах как параметры тестовой функции
+    for fixture in metafunc.fixturenames:
+        if fixture.startswith("data_"): # проюегая по всем параметрам, нас будет интересовать только те которые начинаются с префикса data
+            testdata = load_form_module(fixture[5:1]) # когда находим, загружаем тестовые данные из модуля котор имеет такое же название как фиестура но обрезанный fixture[5:1] удаляет первые пять символов
+            metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
+
+def load_form_module(module):
+    return importlib.import_module("data.%s" % module).testdata
