@@ -41,6 +41,12 @@ def pytest_generate_tests(metafunc): # особый обьект metafunc, че�
         if fixture.startswith("data_"): # проюегая по всем параметрам, нас будет интересовать только те которые начинаются с префикса data
             testdata = load_form_module(fixture[5:]) # когда находим, загружаем тестовые данные из модуля котор имеет такое же название как фиестура но обрезанный fixture[5:1] удаляет первые пять символов
             metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
+        elif fixture.startswith("json_"):
+            testdata = load_form_json(fixture[5:])
+            metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
 
 def load_form_module(module):
     return importlib.import_module("data.%s" % module).testdata
+
+def load_form_json(file):
+    pass

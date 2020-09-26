@@ -2,9 +2,10 @@ from model.contact import Contact
 import random
 import string
 import os.path
-import json
+import jsonpickle
 import getopt
 import sys
+import json
 
 
 try:
@@ -43,4 +44,6 @@ testdata =[Contact(contact_firstname="", contact_lastname="", contact_address=""
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../", f)
 
 with open(file, "w") as out:
-    out.write(json.dumps(testdata, default=lambda x: x.__dict__, indent=2))
+    jsonpickle.set_encoder_options("json", indent=2)  # параметры форматирования для нагладности в json файле
+    out.write(jsonpickle.encode(testdata))
+    #out.write(json.dumps(testdata, default=lambda x: x.__dict__, indent=2))

@@ -43,8 +43,8 @@ import string
 #]
 
 #@pytest.mark.parametrize("contact", testdata, ids=[repr(x) for x in testdata]) #где "contact" название параметра который будет передаваться, а testdata источник откуда будут браться значение параметра
-def test_add_contact(app, data_contacts):
-    contact = data_contacts
+def test_add_contact(app, json_contacts):
+    contact = json_contacts
     old_contacts_list = app.contact.get_contact_list()
     #contact = Contact(contact_firstname="Alex", contact_lastname="Myniuk", contact_address="Sweden")
     app.contact.create(contact)
