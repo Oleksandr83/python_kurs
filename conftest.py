@@ -47,9 +47,14 @@ def stop(request):
     request.addfinalizer(fin)
     return fixture
 
+@pytest.fixture
+def check_ui(request):
+    return request.config.getoption("--check_ui")
+
 def pytest_addoption (parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--target", action="store", default="target.json")
+    parser.addoption("--check_ui", action="store_true")
     #parser.addoption("--password", action="store", default="secret")
 
 def pytest_generate_tests(metafunc): # особый обьект metafunc, через него можно получить практически полную информацию о тестовой функциию. а частности можем полуить инфо о фиксиурах как параметры тестовой функции
