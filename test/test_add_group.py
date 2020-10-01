@@ -3,7 +3,7 @@
 from model.group import Group
 
 # фикстура указывающая на источник данных
-def test_add_group(app, db, json_groups):
+def test_add_group(app, db, json_groups, check_ui):
     group = json_groups
     old_groups = db.get_group_list()
     #group = Group(name="new group", header="some info", footer="other")
@@ -13,3 +13,5 @@ def test_add_group(app, db, json_groups):
     old_groups.append(group)
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
     #app.session.logout()
+    if check_ui:
+        assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)

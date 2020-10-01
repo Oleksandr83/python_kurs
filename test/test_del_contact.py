@@ -4,7 +4,7 @@ from model.contact import Contact
 #from random import randrange
 
 
-def test_del_some_contact(app, db):
+def test_del_some_contact(app, db, check_ui):
     #app.session.login(username="admin", password="secret")
     #if app.contact.count() == 0:
     #   app.contact.create(Contact(contact_firstname="TestName"))
@@ -20,3 +20,5 @@ def test_del_some_contact(app, db):
     assert old_contacts_list == new_contacts_list
     #app.contact.return_to_home_page()
     #app.session.logout()
+    if check_ui:
+        assert sorted(new_contacts_list, key=Contact.id_or_max) == sorted(app.contact.get_contact_list(), key=Contact.id_or_max)

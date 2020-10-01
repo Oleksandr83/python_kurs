@@ -2,7 +2,7 @@ from model.contact import Contact
 from random import randrange
 import random
 
-def test_edit_firstname_contact(app, db):
+def test_edit_firstname_contact(app, db, check_ui):
     #app.session.login(username="admin", password="secret")
     app.contact.check_contact_existence()
     old_contacts_list = db.get_contact_list()
@@ -22,6 +22,8 @@ def test_edit_firstname_contact(app, db):
     old_contacts_list[index] = new_edit_contact_data
     assert sorted(old_contacts_list, key=Contact.id_or_max) == sorted(new_contacts_list, key=Contact.id_or_max)
     #app.session.logout()
+    if check_ui:
+        assert sorted(new_contacts_list, key=Contact.id_or_max) == sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
 
 
 '''def test_edit_firstname_contact(app):

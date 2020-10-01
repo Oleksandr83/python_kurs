@@ -17,7 +17,7 @@ import random
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
     #app.session.logout()'''
 
-def test_edit_group_name(app, db):
+def test_edit_group_name(app, db, check_ui):
     #app.session.login( username="admin", password="secret")
     app.group.check_group_existence()
     old_groups = db.get_group_list()
@@ -33,6 +33,8 @@ def test_edit_group_name(app, db):
     old_groups[index] = data_with_id
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
     #app.session.logout()
+    if check_ui:
+        assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
 
 '''def test_edit_group_header(app):
     #app.session.login(username="admin", password="secret")
