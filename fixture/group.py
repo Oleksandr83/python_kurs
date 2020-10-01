@@ -38,6 +38,19 @@ class GroupHelper:
         self.return_to_groups_page()
         self.group_cache = None
 
+    def edit_group_by_id(self, id, new_group_data):
+        wd = self.app.wd
+        self.open_group_page()
+        self.select_group_by_id(id)
+        # open edit form
+        wd.find_element_by_name("edit").click()
+        # make edition
+        self.fill_group_form(new_group_data)
+        # submit group updating
+        wd.find_element_by_name("update").click()
+        self.return_to_groups_page()
+        self.group_cache = None
+
     def fill_group_form(self, group):
         wd = self.app.wd
         self.change_field_value("group_name", group.name)

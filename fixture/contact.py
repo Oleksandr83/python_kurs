@@ -50,6 +50,20 @@ class ContactHelper:
         self.return_to_home_page()
         self.contact_cache = None
 
+
+    def edit_contact_by_id(self, id, new_contact_data):
+        wd = self.app.wd
+        wd.find_element_by_xpath("/html/body/div/div[3]/ul/li[1]/a").click()
+        # select edition for the first contact
+        self.select_contact_by_id(id)
+        #wd.find_elements_by_xpath("//img[contains(@title,'Edit')]")[index].click() #wd.find_elements_by_xpath("/html/body/div/div[4]/form[2]/table/tbody/tr[2]/td[8]/a/img")[index].click()
+        # edit contact info
+        self.fill_contact_form(new_contact_data)
+        # submit contact updating
+        wd.find_element_by_name("update").click()
+        self.return_to_home_page()
+        self.contact_cache = None
+
     def del_first_contact(self):
         self.del_contact_by_index(0)
 
@@ -57,7 +71,8 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_xpath("/html/body/div/div[3]/ul/li[1]/a").click()
         # select first contact
-        wd.find_elements_by_name("selected[]")[index].click() #wd.find_elements_by_name("selected[]").click()
+        self.select_contact_by_index(index)
+        #wd.find_elements_by_name("selected[]")[index].click() #wd.find_elements_by_name("selected[]").click()
         # submit deletion
         wd.find_element_by_xpath("/html/body/div/div[4]/form[2]/div[2]/input").click()
         # close popup
@@ -65,6 +80,30 @@ class ContactHelper:
         #wd.find_element_by_css_selector("div.msgbox")
         wd.find_element_by_xpath("/html/body/div/div[3]/ul/li[1]/a").click()
         self.contact_cache = None
+
+
+    def del_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_xpath("/html/body/div/div[3]/ul/li[1]/a").click()
+        # select first contact
+        #wd.find_elements_by_name("selected[]")[id].click() #wd.find_elements_by_name("selected[]").click()
+        self.select_contact_by_id(id)
+        # submit deletion
+        wd.find_element_by_xpath("/html/body/div/div[4]/form[2]/div[2]/input").click()
+        # close popup
+        wd.switch_to_alert().accept()
+        #wd.find_element_by_css_selector("div.msgbox")
+        wd.find_element_by_xpath("/html/body/div/div[3]/ul/li[1]/a").click()
+        self.contact_cache = None
+
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
 
     def return_to_home_page(self):
         wd = self.app.wd

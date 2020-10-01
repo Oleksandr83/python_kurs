@@ -43,13 +43,13 @@ import string
 #]
 
 #@pytest.mark.parametrize("contact", testdata, ids=[repr(x) for x in testdata]) #где "contact" название параметра который будет передаваться, а testdata источник откуда будут браться значение параметра
-def test_add_contact(app, json_contacts):
+def test_add_contact(app, db, json_contacts):
     contact = json_contacts
-    old_contacts_list = app.contact.get_contact_list()
+    old_contacts_list = db.get_contact_list()
     #contact = Contact(contact_firstname="Alex", contact_lastname="Myniuk", contact_address="Sweden")
     app.contact.create(contact)
-    new_contacts_list = app.contact.get_contact_list()
-    assert len(old_contacts_list) + 1 == app.contact.count()
+    #assert len(old_contacts_list) + 1 == app.contact.count()
+    new_contacts_list = db.get_contact_list()
     old_contacts_list.append(contact)
     assert sorted(old_contacts_list, key=Contact.id_or_max) == sorted(new_contacts_list, key=Contact.id_or_max)
 
