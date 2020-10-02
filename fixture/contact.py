@@ -82,6 +82,7 @@ class ContactHelper:
         self.contact_cache = None
 
 
+    # не рабочая функция, т.к. нельзя выбрать иконку для редактирования исходя из id
     def del_contact_by_id(self, id):
         wd = self.app.wd
         wd.find_element_by_xpath("/html/body/div/div[3]/ul/li[1]/a").click()
