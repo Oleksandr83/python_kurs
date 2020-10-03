@@ -21,9 +21,6 @@ def test_add_contact_in_group(app, db, orm):
     else:
         old_contact_list_in_group.append(contact)
     assert sorted(old_contact_list_in_group, key=Contact.id_or_max) == sorted(new_contact_list_in_group, key=Contact.id_or_max)
-    #assert sorted(old_contacts_list, key=Contact.id_or_max) == sorted(new_contacts_list, key=Contact.id_or_max)
-    #if check_ui:
-    #    assert sorted(new_contacts_list, key=Contact.id_or_max) == sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
 
 
 

@@ -57,6 +57,7 @@ class ContactHelper:
     # не рабочая функция, т.к. нельзя выбрать иконку для редактирования исходя из id
     def add_contact_in_group_by_id(self, contact_id, group_id):
         wd = self.app.wd
+        self.return_to_home_page()
         wd.find_element_by_xpath("/html/body/div/div[3]/ul/li[1]/a").click()
         # select contact for add to the group
         self.select_contact_by_id(contact_id)
@@ -94,6 +95,14 @@ class ContactHelper:
         wd.find_element_by_xpath("/html/body/div/div[3]/ul/li[1]/a").click()
         self.contact_cache = None
 
+     # на разработке
+    def del_contact_from_group_by_id(self, contact_id, group_id):
+        wd = self.app.wd
+        self.return_to_home_page()
+        wd.find_element_by_xpath("//option[@value='"+ str(group_id) +"']").click()
+        self.select_contact_by_id(contact_id)
+        wd.find_element_by_name("remove").click()
+        wd.find_element_by_link_text("home").click()
 
 
     def del_contact_by_id(self, id):
