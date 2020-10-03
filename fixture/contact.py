@@ -1,5 +1,9 @@
 from model.contact import Contact
 import re # пакет для работы с реглярными выражениями
+from selenium.webdriver.support.ui import Select
+from model.group import Group
+from fixture import db
+import random
 
 
 class ContactHelper:
@@ -50,19 +54,28 @@ class ContactHelper:
         self.return_to_home_page()
         self.contact_cache = None
 
-
-    def edit_contact_by_id(self, id, new_contact_data):
+    # не рабочая функция, т.к. нельзя выбрать иконку для редактирования исходя из id
+    def add_contact_in_group_by_id(self, contact_id, group_id):
         wd = self.app.wd
         wd.find_element_by_xpath("/html/body/div/div[3]/ul/li[1]/a").click()
-        # select edition for the first contact
-        self.select_contact_by_id(id)
-        #wd.find_elements_by_xpath("//img[contains(@title,'Edit')]")[index].click() #wd.find_elements_by_xpath("/html/body/div/div[4]/form[2]/table/tbody/tr[2]/td[8]/a/img")[index].click()
-        # edit contact info
-        self.fill_contact_form(new_contact_data)
-        # submit contact updating
-        wd.find_element_by_name("update").click()
+        # select contact for add to the group
+        self.select_contact_by_id(contact_id)
+        # choose_group_to_add_contact
+        self.choose_some_group_to_add_contact(group_id)
+        # submit contact adding to group
+        wd.find_element_by_name("add").click()
         self.return_to_home_page()
         self.contact_cache = None
+
+    def choose_some_group_to_add_contact(self, id):
+        wd = self.app.wd
+        #groups_list = db.get_group_list()
+        #group = random.choice(groups_list).id
+        wd.find_element_by_name("to_group").click()
+        wd.find_element_by_css_selector("select[name=\"to_group\"] > option[value=\""+ str(id) +"\"]").click()
+        #wd.find_element_by_name("add").click()
+        #wd.find_element_by_link_text("home").click()
+
 
     def del_first_contact(self):
         self.del_contact_by_index(0)
@@ -82,7 +95,7 @@ class ContactHelper:
         self.contact_cache = None
 
 
-    # не рабочая функция, т.к. нельзя выбрать иконку для редактирования исходя из id
+
     def del_contact_by_id(self, id):
         wd = self.app.wd
         wd.find_element_by_xpath("/html/body/div/div[3]/ul/li[1]/a").click()
