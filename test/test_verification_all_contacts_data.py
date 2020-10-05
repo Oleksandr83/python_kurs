@@ -3,21 +3,6 @@ from fixture.orm import ORMFixture
 from model.contact import Contact
 
 
-'''def test_verification_all_contact_data(app, orm):
-    all_contacts_data = []
-    for i in app.contact.get_contact_list():
-        contact_from_home_page = app.contact.get_contact_list()[index]
-    contact_list = app.contact.get_contact_list()
-    index = randrange(len(contact_list))
-    print("\nThe random number from list of the contacts was: " + str(index))
-    contact_from_home_page = app.contact.get_contact_list()[index]
-    contact_from_db = orm.get_contact_list
-    assert contact_from_home_page.contact_firstname == contact_from_db.contact_firstname
-    assert contact_from_home_page.contact_lastname == contact_from_db.contact_lastname
-    assert contact_from_home_page.contact_address == contact_from_db.contact_address
-    assert contact_from_home_page.contact_all_emails_from_home_page == merge_emails_like_on_home_page(contact_from_edit_page)
-    assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_edit_page)'''
-
 def test_verification_all_contact_data(app, orm):
     contact_from_ui_home_page = app.contact.get_contact_list()
     contact_from_db = orm.get_contact_list()

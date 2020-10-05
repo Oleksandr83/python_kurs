@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import Select
 from model.group import Group
 from fixture import db
 import random
+from fixture.orm import ORMFixture
 
 
 class ContactHelper:
@@ -144,6 +145,12 @@ class ContactHelper:
         wd = self.app.wd
         if self.count() == 0:
             self.create(Contact(contact_firstname="TestName"))
+
+    def check_contact_and_group_existence(self, orm):
+        if len(orm.get_contact_list()) == 0:
+            self.check_contact_existence()
+        if len(orm.get_group_list()) ==0:
+            self.check_group_existence()
 
     contact_cache = None
 

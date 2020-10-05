@@ -4,6 +4,10 @@ import random
 from fixture.orm import ORMFixture
 
 def test_del_contact_from_grup(app, db, orm):
+    if len(orm.get_contact_list()) == 0:
+        app.contact.check_contact_existence()
+    if len(orm.get_group_list()) == 0:
+        app.group.check_group_existence()
     groups_list = db.get_group_list()
     group = random.choice(groups_list)
     old_contacts_list_in_group = orm.get_contacts_in_group(group)
