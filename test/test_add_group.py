@@ -1,17 +1,38 @@
 # -*- coding: utf-8 -*-
 
 from model.group import Group
+import allure
+
 
 # фикстура указывающая на источник данных
 def test_add_group(app, db, json_groups, check_ui):
     group = json_groups
-    old_groups = db.get_group_list()
-    #group = Group(name="new group", header="some info", footer="other")
-    app.group.create(group)
-    #assert len(old_groups) + 1 == app.group.count() #len(new_groups)
-    new_groups = db.get_group_list()
-    old_groups.append(group)
-    assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
-    #app.session.logout()
-    if check_ui:
-        assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
+    with allure.step('Given a group list'):
+        old_groups = db.get_group_list()
+    with allure.step('When I add a group %s to the list' % group):
+        app.group.create(group)
+    with allure.step('Then the new group list is equal to the old group list with the added group'):
+        new_groups = db.get_group_list()
+        old_groups.append(group)
+        assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+
+    #if check_ui:
+    #    assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
+
+
+
+
+
+# фикстура указывающая на источник данных
+#def test_add_group(app, db, json_groups, check_ui):
+#    group = json_groups
+#    old_groups = db.get_group_list()
+#    #group = Group(name="new group", header="some info", footer="other")
+#    app.group.create(group)
+#    #assert len(old_groups) + 1 == app.group.count() #len(new_groups)
+#    new_groups = db.get_group_list()
+#    old_groups.append(group)
+#    assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+#    #app.session.logout()
+#    if check_ui:
+#        assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
